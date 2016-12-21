@@ -1,0 +1,5 @@
+Group.minScanInterval = 8
+Group.defaultScanInterval = 32
+Group.maxScanInterval = 56
+Group.adjustmentWarmup = 4000
+Group.regionLength = 500

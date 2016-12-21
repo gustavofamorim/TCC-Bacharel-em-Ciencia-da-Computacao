@@ -1,0 +1,45 @@
+\chapter{INTRODUÇÃO}
+
+Com o auxílio de uma imensa rede de computadores, a Internet, distâncias estão cada vez mais se tornando menores, principalmente quando se têm em vista a comunicação. Para um usuário comum da Internet que mora em um grande centro urbano, não é tão simples imaginar um cenário onde não exista qualquer infraestrutura que possibilite a troca eficiente de dados entre dispositivos de computação para enviar um simples e-mail ao seu amigo, por exemplo.
+
+Fugindo do ambiente urbano, em um cenário de guerra, por exemplo, a invasão ou destruição de uma base responsável pela transferência de dados operacionais de tropas pode acarretar em desconexões entre os dispositivos utilizados, tornando complicada a articulação dos militares.  Outro cenário é o interplanetário, onde os satélites artificiais da terra, dependendo da sua posição em relação ao globo, podem não conseguir contatar as sondas enviadas a outros planetas, gerando desconexões e latências\footnote{Termo muito utilizado na área de \emph{Redes de Computadores} para referir-se ao atraso - tempo decorrido - entre o envio de um pacote de dados e o recebimento da confirmação de entrega.} que podem durar horas ou até mesmo dias.
+
+Existem ainda \emph{Redes Móveis Ad Hoc}, onde dispositivos móveis trabalham de forma independente e sem uma infraestrutura fixa e estável, não existindo um elemento centralizador para coordenar e intermediar a comunicação entre os nós. Essas redes são muito úteis em ambientes onde não é possível estabelecer uma infraestrutura adequada e são caracterizadas, principalmente, pelo uso de dispositivos sem fio para a troca de dados \cite{alves2009redes}.
+
+As topologias das redes apresentadas possuem como característica a impossibilidade de se garantir a alcançabilidade de um dispositivo em determinados momentos, devido às limitações de abrangência do sinal, por exemplo. Tais redes são denominadas \emph{DTNs} (do inglês "Delay Tolerant Networks") ou \emph{Redes Tolerantes a Atrasos e Desconexões} \cite{alves2009redes}. Um dos grande desafios dessas redes, devido a infraestrutura inexistente, é a forma como é realizado o aproveitamento da energia, pois, normalmente, os dispositivos não possuem disponível uma fonte elétrica intermitente para que sejam conectados e fiquem ativos permanentemente. A mobilidade, característica marcante desse tipo de rede, depende do uso de baterias que, por sua vez, possuem sua capacidade muito limitada. Caracteriza-se, desta forma, um importante problema a ser atacado.
+
+Além disso, as limitações quanto a abrangência do sinal dos dispositivos, atrelada à mobilidade, torna as oportunidades de retransmissão de mensagens, ou oportunidades de contato, muito importantes para o encaminhamento das mensagens pela rede, pois é a partir delas que as DTNs implementam mecanismos que possibilitam a entrega de mensagens.
+
+Nesse cenário, torna-se necessário o desenvolvimento de mecanismos que permitam que os dispositivos façam um gerenciamento inteligente do consumo de energia visando aumentar a quantidade de mensagens entregues pela rede sem que as oportunidades de contato sejam grandemente prejudicadas, tendo em vista a premissa básica, que é melhorar o funcionamento das aplicações que são executadas sobre essas redes.
+
+\section{Motivação}\label{mot}
+
+O problema do consumo de energia enfrentado nas \emph{DTNs} é, por si só, grande motivador para o desenvolvimento de uma técnica visando o amortecimento do mesmo, pois, quando bem atacado, se traduz em um aumento da quantidade de mensagens entregues pela rede. Além disso, a discussão do consumo energético dentro do âmbito das DTNs é recorrente, visto a limitação das baterias dos dispositivos e ausência de infraestrutura em cenários como as redes espaciais e situações de guerra.
+
+As oportunidades de contato são diretamente influenciadas pelo intervalo de busca por dispositivos próximos e estudos apontam um intervalo ótimo de 32 segundos \cite{denis_artigo}. A criação de uma técnica que gerencie de forma adaptativa esse importante fator do consumo das baterias também serviu como motivação para o desenvolvimento deste trabalho, visto o potencial apresentado quanto ao aumento da quantidade de mensagens entregues pela rede e, consequentemente, melhoria do desempenho das aplicações.
+
+Tendo em vista os exemplos apresentados, vê-se grande importância científica na criação de uma técnica com o objetivo de melhorar o gerenciamento energético dentro da arquitetura de rede em questão com o intuito de melhor aproveitar os recursos, principalmente a bateria, dos dispositivos.
+
+\section{Objetivo Geral}\label{sec:objetivos_gerais}
+
+Neste trabalho é objetivado o desenvolvimento de uma técnica baseada em Georreferenciamento e Gradientes de Concentração que controle de forma adaptativa o intervalo de tempo (frequência) que os dispositivos realizam busca para encontrar outros dispositivos em Redes Tolerantes a Atrasos e Desconexões.
+
+\section{Objetivos Específicos}\label{sec:objetivos_especificos}
+
+Para se atingir o objetivo principal deste trabalho, faz-se necessário a realização dos seguintes objetivos específicos:
+
+\begin{itemize}
+ \item Pesquisar e analisar o ferramental teórico para o uso de Gradientes de Concentração aplicados nas DTNs;
+ \item Estudo do simulador the ONE;
+ \item Estudo do módulo de energia proposto por \cite{denis_artigo};
+ \item Implementação de um módulo de dispositivos GPS para o simulador The ONE;
+ \item Implementação da técnica;
+ \item Simulação da técnica desenvolvida com o simulador;
+ \item Coleta, análise e discussão de dados de simulação;
+\end{itemize}
+
+\section{Metodologia}\label{sec:metodologia}
+
+A partir da pesquisa de artigos científicos publicados internacionalmente, livros didáticos e materiais da Internet com referências adequadas de autores renomados relacionados ao contexto deste trabalho, são explanados os conceitos sobre DTNs, mapeamento geográfico, gradientes de concentração, para construir a base teórica necessária que realça a fundamentação, o desenvolvimento dos testes e o esclarecimento dos resultados obtidos.
+
+Acerca da implementação, foi utilizado o simulador The ONE, desenvolvido por \cite{keranen2009one}, para a implementar e testar um protótipo da técnica proposta. Os cenários de testes foram baseados em \cite{denis_artigo} e as simulações foram desenvolvidas com os três principais protocolos utilizados em literaturas sobre redes DTN. Os resultados foram apresentados na forma de gráficos e explanações sobre as suas conclusões, levando-se em consideração o consumo energético atrelado à quantidade de mensagens entregues pela rede.

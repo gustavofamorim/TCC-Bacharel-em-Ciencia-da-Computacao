@@ -1,0 +1,79 @@
+\section{Descrição da Implementação}
+
+A implementação da técnica dentro do simulador The ONE passou por duas etapas principais e importantes de serem descritas neste trabalho: a preparação do simulador e o desenvolvimento efetivo da técnica.
+
+\subsection{Preparação do Simulador The ONE}
+
+Antes do desenvolvimento efetivo da técnica, foi preciso preparar o simulador. É nesta etapa que o módulo de GPS foi implementado e sua respectiva incorporação com o módulo de energia foi feita.
+
+O módulo de GPS nada mais é que uma classe \emph{GPSModule} integrada à classe \emph{DTNHost} que, por sua vez, é responsável por representar cada nó da rede simulada. 
+
+O \emph{GPSModule} possui dois modos de operação. São eles:
+
+\begin{itemize}
+    \item \textbf{Com consumo:} É modo utilizado para contabilização de energia consumida pelo dispositivo de GPS integrado aos hosts. A cada consulta GPS o \emph{GPSModule} se encarrega de notificar ao módulo de energia \emph{EnergyModel} que este foi utilizado e consumiu a bateria.
+    \item \textbf{Sem consumo:} É o modo utilizado para simulações quando não se deseja contabilizar o consumo do dispositivo de GPS.
+\end{itemize}
+
+Devido ao fato dos dispositivos GPS também serem responsáveis pelo consumo das baterias, o módulo desenvolvido também é integrado ao módulo de energia do simulador. A contabilização do consumo é feita a cada consulta GPS realizada pelo dispositivo a partir da chamada ao método \emph{reduceEnergy} explanado na subseção \ref{modulo_energia}.
+
+A forma como o módulo foi implementado permite que o usuário defina padrões de consumo para cada um grupo de nós. Como exemplo, é possível criar dois grupos um para \emph{smartphones} e outro para carros e definir um consumo diferente de energia para cada um deles. Caso seja desejado, é possível ainda definir um consumo global, onde todos os nós respeitam um único padrão de consumo.
+
+A utilização do módulo necessita da definição da quantidade de energia que é consumida pelo dispositivo GPS em cada consulta. Essa configuração se dá por meio da propriedade \emph{gpsScanEnergy} dentro do arquivo de configurações do simulador apresentado na subseção \ref{subsec:arquivo_configuracao}. Em caso da omissão dessa linha de configuração, o simulador entenderá que modo de operação é o \emph{sem consumo} e, consequentemente, não contabilizará o consumo de energia por parte dos dispositivos GPS.
+
+A Figura \ref{gps_config} apresenta um exemplo de configuração onde todos os dispositivos são configurados para consumirem 154,6mW em cada consulta GPS.
+
+\begin{figure}[htp!]
+\centering
+\lstinputlisting[language=Java]{codigos/gps_config.txt}
+\caption{Exemplo de configuração do consumo do módulo de GPS.}
+\label{gps_config}
+\end{figure}
+
+\subsection{Desenvolvimento da Técnica}
+
+A técnica desenvolvida teve seu foco principal na modelagem da \emph{Tabela de Mapeamento de Regiões}, no modelo de ajuste de busca e na integração deles com o simulador.
+
+A TMR foi implementada pela classe \emph{ConcentrationMap}, que, por sua vez, utiliza uma tabela de dispersão para armazenar as informações das regiões definidas por meio do tamanho base \emph{RegionLength}. Esta estratégia de armazenamento permite economia de memória, visto que apenas as regiões com dados conhecidos são armazenadas pelo dispositivo.
+
+O modelo de ajuste de busca, definido pelo \emph{ScanAdjustmentModel}, é responsável pela dinamização do intervalo de busca por dispositivos. É nele que se encontra o método \emph{getBestScanTime}, responsável por realizar o cálculo da equação \ref{eq_intervalo_ideal}, apresentada na subseção \ref{sec:dinamizacao_intervalo_busca}, e retornar o intervalo apropriado para a região em que o nó se encontra. Além dos intervalos mínimos e máximos de busca, representados pelos parâmetros \emph{MinScanInterval} e \emph{MaxScanInterval}, respectivamente, o método também recebe o parâmetro \emph{DefaultScanInterval}, que, por sua vez, representa o intervalo de busca padrão a ser utilizado quando em \emph{warmup time} ou quando o dispositivo não possui dados sobre a região onde se encontra.
+
+É importante ressaltar que, o intervalo padrão pode ser ajustado livremente pelo usuário, mas, neste trabalho, considerou-se apenas o intervalo ideal proposto por \cite{denis_artigo}, ou seja, 32 segundos, como visto na Figura \ref{diagrama}.
+
+Tendo a TMR e o modelo de ajuste de busca implementados, foi necessário integrá-los ao simulador. Para isso a interface de rede dos nós, representada pela classe \emph{NetworkInterface}, precisou ser alterada. Em suma, apenas o método \emph{isScanning} foi modificado para utilizar o intervalo de busca apropriado (retornado pelo método \emph{getBestScanTime}) quando detecta que um novo ciclo de busca foi iniciado.
+
+Dentro da arquitetura do simulador, o resultado das alterações feitas é apresentado no diagrama da Figura \ref{theOne_modificado}. A técnica em si, foi implementada dentro do módulo \emph{Conectivity and Data} e é representada em laranja como \emph{TMR and GPS module}.
+
+A Figura \ref{tecnica_config} exibe um exemplo de configuração para todos os dispositivos dos parâmetros \emph{DefaultScanInterval}, \emph{MinScanInterval}, \emph{MaxScanInterval}, \emph{RegionLength} e \emph{AdjustmentWarmup}.
+
+A Tabela \ref{parametros_ajustaveis} apresenta individualmente os parâmetros da técnica que podem ser ajustados para a descrição do cenário de simulação dentro do arquivo de configurações do simulador apresentado na Subseção \ref{subsec:arquivo_configuracao}.
+\begin{figure}[htp!]
+\centering
+\includegraphics[width=1\textwidth]{figuras/cap_4/TheONEArchtecture_modificada.png}
+\caption{Diagrama de fluxo da dinamização do intervalo de busca}
+\label{theOne_modificado}
+\end{figure}
+
+\begin{figure}[htp!]
+\centering
+\lstinputlisting[language=Java]{codigos/tecnica_config.txt}
+\caption{Configuração dos parâmetros de funcionamento da técnica.}
+\label{tecnica_config}
+\end{figure}
+
+
+\begin{table}[H]
+\centering
+\caption{Parâmetros ajustáveis da técnica.}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Parâmetro}        & \textbf{Tipo}   & \textbf{Ação}                                                      \\ \hline
+GpsScanEnergy    & double & \begin{tabular}[x]{@{}l@{}}Define a quantidade de energia gasta a cada busca\\de GPS.\end{tabular} \\ \hline
+MinScanInterval  & double & Define o intervalo mínimo de busca.                       \\ \hline
+MaxScanInterval  & double & Define o intervalo máximo de busca.                       \\ \hline
+DefaultScanInterval  & double & Define o intervalo padrão de busca.                       \\ \hline
+AdjustmentWarmup & int    & Define o tempo de aquecimento da técnica.                 \\ \hline
+RegionLength     & double & Define o tamanho das regiões.                             \\ \hline
+\end{tabular}
+\label{parametros_ajustaveis}
+\end{table}

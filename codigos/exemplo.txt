@@ -1,0 +1,28 @@
+
+Scenario.name = exemplo
+Scenario.simulateConnections = true
+Scenario.updateInterval = 0.1
+Scenario.endTime = 86400
+Scenario.nrofHostGroups = 1
+
+btInterface.type = SimpleBroadcastInterface
+btInterface.transmitSpeed = 250k
+btInterface.transmitRange = 10
+btInterface.scanInterval = 32
+
+Group1.movementModel = ShortestPathMapBasedMovement
+Group1.router = EpidemicRouter
+Group1.initialEnergy = 4800
+Group1.scanEnergy = 0.92
+Group1.scanResponseEnergy = 0.1
+Group1.transmitEnergy = 0.08
+Group1.receiveEnergy = 0.08
+Group1.bufferSize = 5M
+Group1.waitTime = 0, 120
+Group1.nrofInterfaces = 1
+Group1.interface1 = btInterface
+Group1.speed = 0.5, 1.5
+Group1.msgTtl = 300
+Group1.nrofHosts = 10
+Group1.groupID = p
+

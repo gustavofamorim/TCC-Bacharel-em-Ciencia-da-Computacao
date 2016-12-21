@@ -1,0 +1,293 @@
+%% Template para TCC do Curso de Ciência da Computação da Universidade Vila Velha
+%% Editado por: Leonardo Muniz de Lima
+%% Editado por: Sabrina Siqueira Panceri
+%% Última Alteração: 10/05/2013
+
+%==============================================================================
+%								IMPORTANTE
+%==============================================================================
+% - As referências não funcionam no Windows.
+% - Se vc preferir utilizar qq sistema operacional GNU/Linux em máquina virtual, poderá ter problemas com as referências.
+% - Para um bom funcionamento deste modelo, aconselho que o mesmo seja utilizado em um sistema operacional GNU/Linux de sua preferência
+% - Alguns editores LaTex possuem uma interface mais amigável, são eles: Kile, TexMaker, Lyx, etc.
+% - Para gerar ou atualizar o sumário, as citações no texto, e as referências bibliográficas, compile o arquivo no mínimo 3 vezes. Se ocorrer um erro, exclua os arquivos gerados pela compilação e compile o arquivo .tex principal novamente. Há vezes em que a compilação não atualiza todos os arquivos.
+% - Se ao compilar um arquivo ocorrer um erro, tente ler o erro e entender o que deu errado. 
+%==============================================================================
+
+
+%==============================================================================
+%                              PREÂMBULO
+%==============================================================================
+\documentclass[brazil]{abnt-UVV/abnt-uvv}
+\usepackage{tabularx}
+\usepackage{graphicx,url, enumerate}
+\usepackage[brazil]{babel}   
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[colorlinks,linkcolor=black,citecolor=black, hyperindex]{hyperref}
+
+\usepackage{listings}
+\usepackage{svg}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes,arrows}
+\usepackage{rotating}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{booktabs}
+
+\renewcommand{\rmdefault}{phv} 
+\renewcommand{\sfdefault}{phv} 
+%\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+\definecolor{javared}{rgb}{0.6,0,0} % for strings
+\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
+\definecolor{javapurple}{rgb}{0.5,0,0.35} % keywords
+\definecolor{javadocblue}{rgb}{0.25,0.35,0.75} % javadoc
+ 
+\usepackage{float}
+\usepackage{color}
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+
+\usepackage{listings}
+\lstset{language=Java,
+    showspaces=false,
+    showtabs=false,
+    breaklines=true,
+    showstringspaces=false,
+    breakatwhitespace=true,
+    commentstyle=\color{pgreen},
+    keywordstyle=\color{pblue},
+    stringstyle=\color{pred},
+    basicstyle=\ttfamily,
+    moredelim=[il][\textcolor{pgrey}]{$$},
+    moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
+    numbers=left,
+    numberstyle=\color{black},
+    stepnumber=1,
+    numbersep=11pt
+}
+
+%==============================================================================
+
+%==============================================================================
+%                              ELEMENTOS PRÉ-TEXTUAIS
+%==============================================================================
+\autor{Gustavo Freitas de Amorim}
+ 
+\titulo{Gerenciamento Adaptativo do Intervalo de Busca por Dispositivos Móveis em Redes Tolerantes a Atrasos e Desconexões}
+
+\orientador[Orientador:]{Msc. Denis Rodrigues da Silva}
+
+\comentario{Trabalho de Conclusão de Curso apresentado a Universidade Vila Velha como requisito parcial para a obtenção do grau de Bacharel em Ciência da Computação.}
+
+\instituicao{UNIVERSIDADE VILA VELHA \par CURSO DE CIÊNCIA DA COMPUTAÇÃO}
+
+\local{VILA VELHA}
+
+\data{2016} 
+%==============================================================================
+
+%INÍCIO DO DOCUMENTO
+\begin{document} 
+
+%============================
+% 1) Capa
+%===========================
+\capa
+%==============================================================================
+
+%============================
+% 2) Folha de Rosto
+%===========================
+\folhaderosto
+%==============================================================================
+
+%============================
+% 3) Folha de Aprovacao
+%===========================
+\begin{folhadeaprovacao}
+\begin{center}
+\autorformat\ABNTautordata
+\end{center}
+\vspace{2cm}
+\begin{center}
+\tituloformat\ABNTtitulodata
+\end{center}
+\vspace{1.0cm}
+\hspace{7cm}{\large\bf{BANCA EXAMINADORA}}
+\assinatura{Prof. Msc. Denis Rodrigues da Silva \par Universidade Vila Velha \par Orientador}
+\assinatura{Prof. Msc. Ricardo Mendes Costa Segundo \par Universidade Vila Velha}
+\assinatura{Prof. Dsc. Rodolfo da Silva Villaça  \par Universidade Federal do Espírito Santo}
+\vspace{1cm}
+\termino{9}{12}{\ABNTdatadata} %DIA DA APRESENTAÇÃO
+\end{folhadeaprovacao}
+%==============================================================================
+
+%==============================================================================
+% 4) Folha de Autorização para publicação
+% Obrigatória para TCC com nota final maior ou igual a 8.0 pontos.
+%==============================================================================
+Autorizo que a UVV, sem ônus, promova a publicação de minha monografia em página própria na Internet ou outro meio de divulgação de trabalho científico.
+
+\vspace{2cm}
+\hspace{7cm}{\large\bf{ASSINATURAS}}
+\assinatura{Prof. Msc. Denis Rodrigues da Silva \par Universidade Vila Velha \par Orientador}
+\assinatura{Gustavo Freitas de Amorim \par Universidade Vila Velha}
+\vspace{2cm}
+09/12/2016 %DIA DA APRESENTAÇÃO
+\pagebreak
+%==============================================================================
+
+%==============================================================================
+% 5) Dedicatória (Opcional)
+%==============================================================================
+\chapter*{DEDICATÓRIA}
+ \vspace*{15cm}
+ \begin{flushright}
+ {
+    \large {
+        \em {A Deus e a todas as crianças grandes que, quando pequenas, sonhavam ser um Grande Cientista.}
+    }
+}
+\end{flushright}
+\pagebreak
+%=============================================================================
+
+
+%==============================================================================
+% 6) Agradecimentos (Opcional)
+%=============================================================================
+\chapter*{AGRADECIMENTOS}
+
+Agradeço primeiramente a Deus e, em seguida, à minha mãe por sempre estar presente, apoiar em minhas decisões e me aconselhar com o melhor conselho do mundo, "Estude para ter tudo aquilo que não podemos lhe dar!". Agradeço ao meu pai que, mesmo estando ausente em diversos momentos por razões de trabalho, sempre batalhou para trazer o melhor para a nossa família. Agradeço às minhas irmãs pelo companheirismo e o apoio tão importante e incalculável. Agradeço aos meus sobrinhos que sempre estiveram comigo e que os considero como irmãos.
+
+Agradeço a todos os professores que me ajudaram a chegar até aqui, em especial ao meu orientador, Denis Rodrigues da Silva, pois sem sua ajuda não seria possível desenvolver este trabalho.
+
+Um agradecimento especial à minha sobrinha Lívia, que, mesmo com apenas 3 anos, consegue me fazer considerá-la uma das melhores pessoas que apareceram na minha vida. A cada aprendizado dela eu vejo um grande sorriso em seu rosto, um sorriso para um novo horizonte de possibilidades aberto, fazendo-me recordar de 2005, ano marcado pelo meu primeiro contato com um computador pessoal.
+
+\pagebreak
+%=============================================================================
+
+%=============================================================================
+% 7) Epígrafe (Opcional)
+%=============================================================================
+\vspace*{15cm}
+\begin{flushright}{}"\emph{Dubito, ergo cogito, ergo sum.}"\\
+{\small René Descartes (1596 - 1650)}\end{flushright}{\small \par}
+\vfill{}
+\pagebreak
+%=============================================================================
+
+%==================
+% 11) Resumo
+%==================
+\begin{resumo} 
+
+A Internet atual baseia-se em um modelo onde existe garantia de conectividade fim-a-fim entre os dispositivos e baixas taxas de erros, atrasos e desconexões. No entanto, existem situações, como em cenários de guerra, onde não é possível implantar uma infra-estrutura que garanta tais características que são essenciais para o funcionamento da Internet. Nesse sentido, as Redes Tolerantes a Atrasos e Desconexões estão previstas para funcionar em ambientes onde não há uma infra-estrutura tradicional, nem garantias de conectividade fim-a-fim e existem altas taxas de erros e desconexões. Como tal arquitetura depende da mobilidade dos dispositivos que se conectam assim que ocorre uma oportunidade de contato, o gerenciamento eficaz do consumo das baterias se torna essencial para o desempenho desse tipo de rede. Assim, este trabalho propõe o desenvolvimento de uma técnica baseada em geolocalização e gradientes de concentração que realiza o mapeamento das áreas geográficas por onde os dispositivos podem se locomover e ajusta de forma adaptativa o intervalo de busca por outros dispositivos, ou seja, regulando o consumo de energia de acordo com a probabilidade de contato em uma determinada região.
+
+\textbf{Palavras-Chave:} Redes Tolerantes a Atrasos e Desconexões, Energia, Geolocalização, Gradientes de Concentração
+\end{resumo}
+%=============================================================================
+
+%=============================================================================
+% 12) Abstract (Não é necessário em TCC's somente em dissertações e teses.)
+%=============================================================================
+\begin{abstract}
+
+Nowadays, the Internet is based on an end-to-end connection model with low rates of errors, delays and disconnections. However, there are situations, such as in war scenarios, where it is not possible to deploy an infrastructure that guarantees such characteristics that are essential for the functioning of the Internet. In this regard, Delay Tolerant Networks are proposed to operate in environments where there is no traditional infrastructure and end-to-end connectivity is ensured and there are high error and disconnection rates. As such architecture depends on the mobility of the devices that connect as soon as a contact opportunity occurs, effective management of the consumption of the batteries becomes essential for the performance of this type of networks. Hence this work proposes the development of a technique based on geolocation and concentration gradients that perform a spatial mapping of the geographic areas through which the devices can move and adjusts adaptively to the interval of search for other devices, that is, regulating consumption according to the probability of contact in a certain region.
+
+\textbf{Keywords:} Delay Tolerant Networks, Energy, Geolocation, Concentration Gradients
+\end{abstract}
+%=============================================================================
+
+
+%=============================================================================
+% 8) Lista de tabelas
+%=============================================================================
+%\listadetabelas
+%=============================================================================
+
+%=============================================================================
+% 9) Lista de figuras
+%=============================================================================
+\listadefiguras
+%=============================================================================
+
+
+%=============================================================================
+% 10) Lista de siglas
+%=============================================================================
+\pretextualchapter{\listofabreviationsname}
+
+\begin{tabbing}
+\hspace{0.80cm}SIGLA \= espaço \= Significado da sigla que pode ser grande \kill
+\hspace{0.80cm}CHANTS 		\> \> Challenged NeTworks\\
+\hspace{0.80cm}CRAN 		\> \> Comprehensive R Archive Network\\
+\hspace{0.80cm}DOS 		\> \> Department of Defense\\
+\hspace{0.80cm}DTN 		\> \> Delay Tolerant Networks\\
+\hspace{0.80cm}GLONASS 		\> \> Global Navigation Satellite System\\
+\hspace{0.80cm}GNSS 		\> \> Global Navigation Satellite Systems\\
+\hspace{0.80cm}GPL 		\> \> General Public License\\
+\hspace{0.80cm}GPS 		\> \> Global Positioning System\\
+\hspace{0.80cm}IETF 		\> \> Internet Enginnering TaskForce\\
+\hspace{0.80cm}IP 		\> \> Internet Protocol\\
+\hspace{0.80cm}JVM 		\> \> Java Virtual Machine\\
+\hspace{0.80cm}MANET 		\> \> Mobile Ad Hoc Netwrok\\
+\hspace{0.80cm}ONE 		\> \> Opportunistic Network Environment Simulator\\ 
+\hspace{0.80cm}OO 		\> \> Orientado a Objetos\\ 
+\hspace{0.80cm}OSI 		\> \> Open Systems Interconnection\\
+\hspace{0.80cm}RFC 		\> \> Request for Comments\\
+\hspace{0.80cm}SCTP 		\> \> Stream Control Transmission Protocol\\
+\hspace{0.80cm}TCP 		\> \> Transmission Control Protocol\\
+\hspace{0.80cm}TMR 		\> \> Tabela de Mapeamento de Regiões\\
+
+
+\end{tabbing}
+%=============================================================================
+
+%=======================
+% 11) Sumário
+%=======================
+\sumario
+%=============================================================================
+
+%==============================================================================
+%				  ELEMENTOS TEXTUAIS
+%==============================================================================
+
+%Inclusão dos capítulos que foram escritos em arquivos separados.
+%Os capítulos são gerados de acordo com a ordem de inclusão.
+%Essa é uma sugestão de capítulos a serem desenvolvidos.
+
+%capítulo 1 - Introdução
+\include{capitulo_1/cap_introducao}
+
+%capítulo 2 - Fundamentação Teórica
+\include{capitulo_2/cap_fundamentacao}
+
+%capítulo 3 - Tecnologias Utilizadas
+\include{capitulo_3/cap_tecnologias}
+
+%capítulo 4 - Descrição do Projeto
+\include{capitulo_4/cap_projeto}
+
+%capítulo 5 - Testes
+\include{capitulo_5/cap_testes}
+
+%capítulo 6 - Conclusão
+\include{capitulo_6/cap_conclusao}
+
+
+%==============================================================================
+%				  BIBLIOGRAFIA / REFERÊNCIAS
+%==============================================================================
+\bibliography{bibliografia}
+\bibliographystyle{abnt-alf}
+
+%Fim do documento
+\end{document}

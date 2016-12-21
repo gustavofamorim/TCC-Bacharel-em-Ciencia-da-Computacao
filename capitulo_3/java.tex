@@ -1,0 +1,21 @@
+
+\section{Java}\label{sec:java}
+
+Java é uma plataforma e linguagem de programação de alto nível, baseada principalmente no paradigma orientado a objetos (OO), independente de plataforma e atrelada a um ambiente de execução integrado. Sua sintaxe é derivada de linguagens como C e C++, porém com abstrações e simplificações em relação ao modelo OO encontrado nesta última.  \cite{deitel2010java}
+
+Aplicações Java são traduzidas para o bytecode (chamados de arquivos de classe ou class files) que são executados pela JVM (do inglês "Java Virtual Machine", ou "Máquina Virtual Java", em português), tendo um importante papel na plataforma, pois permite a portabilidade oferecida pela plataforma \cite{deitel2010java}. 
+
+O conceito "write once, run anywhere" (ou "escreva uma vez, rode em qualquer lugar", em português) torna as aplicações extremamente portáveis, pois permite a criação de executáveis que podem ser executados em qualquer plataforma sem a necessidade de recompilação para cada uma delas \cite{deitel2010java}.
+
+Abstrações relacionadas a gerencia de memória são implementadas pela JVM por meio do mecanismo de coleta de lixo (garbage-collector), proporcionando aos programadores maior facilidade na escrita de seus programas.
+
+A figura \ref{ola_mundo_java} apresenta um simples código que escreve a célebre frase "Hello, world!" \newline no dispositivo de saída padrão de um computador.
+
+\begin{figure}[htp!]
+\centering
+\lstinputlisting[language=Java]{codigos/ola_mundo.java}
+\caption{Código Java que escreve a frase "Hello, world!" no dispositivo de saída padrão.}
+\label{ola_mundo_java}
+\end{figure}
+
+Como já apresentado na seção \ref{sec:theONE}, o simulador the ONE foi implementado utilizando a plataforma Java. O desenvolvimento da técnica envolve a implementação de um módulo para o simulador utilizando essa linguagem, surgindo então a necessidade do estudo da mesma.

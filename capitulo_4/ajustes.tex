@@ -1,0 +1,21 @@
+\section{Parâmetros Ajustáveis}
+
+Como visto na seção anterior, durante a implementação da técnica dentro do simulador The ONE, foram desenvolvidos também meios para configuração da forma como a técnica opera no ambiente de simulação escolhido. Os parâmetros ajustáveis são descritos individualmente na tabela \ref{parametros_ajustaveis}.
+
+\begin{table}
+\centering
+\caption{Parâmetros ajustáveis da técnica.}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Parâmetro}        & \textbf{Tipo}   & \textbf{Ação}                                                      \\ \hline
+GpsScanEnergy    & double & \begin{tabular}[x]{@{}l@{}}Define a quantidade de energia gasta a cada busca\\de GPS.\end{tabular} \\ \hline
+MinScanInterval  & double & Define o intervalo mínimo de busca.                       \\ \hline
+MaxScanInterval  & double & Define o intervalo máximo de busca.                       \\ \hline
+DefaultScanInterval  & double & Define o intervalo padrão de busca.                       \\ \hline
+AdjustmentWarmup & int    & Define o tempo de aquecimento da técnica.                 \\ \hline
+RegionLength     & double & Define o tamanho das regiões.                             \\ \hline
+\end{tabular}
+\label{parametros_ajustaveis}
+\end{table}
+
+\pagebreak

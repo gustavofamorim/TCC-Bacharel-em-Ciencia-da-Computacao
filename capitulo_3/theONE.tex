@@ -1,0 +1,101 @@
+\section{Simulador The ONE}\label{sec:theONE}
+
+O \emph{The Opportunistic Network Environment Simulator}, ou apenas The ONE, é uma ferramenta open source modular construída utilizando a plataforma Java e que permite a simulação de DTNs e implementa os principais mecanismos necessários para funcionamento dessas redes, como algoritmos de disseminação e gerenciamento de mensagens \cite{keranen2009one}. A Figura \ref{theONE} apresenta os módulos do simulador e os seus respectivos relacionamentos. 
+
+Quanto a sua utilização, o The ONE baseia-se na definição de um cenário de simulação onde é possível configurar diversos elementos, como eventos, protocolos de encaminhamento, modelos de movimentação, características dos dispositivos e relatórios a serem gerados. Tais itens são melhor detalhados nas subseções a seguir, começando pelo Encaminhamento de Mensagens, passando pelo Módulo de Energia, Modelos de Movimento, Eventos, Relatórios e Automação de Testes, Dispositivos e, finalmente, uma breve apresentação da Interface Gráfica do mesmo.
+
+\begin{figure}[htp!]
+    \centering
+    \includegraphics[width=1\textwidth]{figuras/cap_3/secao_1/TheONEArchtecture.png}
+    \caption{Arquitetura do simulador The ONE \cite{keranen2009one}.}
+    \label{theONE}
+\end{figure}
+
+\subsection{Encaminhamento de Mensagens}
+
+O simulador The ONE nativamente é compatível com os principais protocolos de encaminhamento existentes em DTNs. Destacando-se os protocolos Prophet, Epidemic Routing, Spray-and-Wait e Direct Contact, que foram explanados na subseção \ref{subsec:encaminhamento_mensagens}. Todos os protocolos são implementados junto ao módulo \emph{routing} exibido na Figura \ref{theONE}.
+
+A arquitetura modular do simulador possibilita grande flexibilidade quando deseja-se testar novos protocolos, bastando para tanto implementar o modelo desejado e integrá-lo ao módulo \emph{routing}. Para isso, o desenvolvedor do novo protocolo a ser testado precisa apenas herdar e sobrescrever, caso necessário, as características da classe \emph{ActiveRouter}, que, por sua vez, define operações básicas comuns de todos os protocolos de encaminhamento voltado para as DTNs, como decisões estratégicas de envio e recepção de mensagens e o gerenciamento do buffer de mensagens.
+
+Quanto à simulação dos protocolos, um dos principais diferenciais do simulador escolhido é a possibilidade de definir grupos de nós, onde, cada grupo, pode executar diferentes protocolos de encaminhamento e possuir detalhes de hardware únicos, como tamanho dos buffers de armazenamento e antenas de rádio com diferentes capacidades.
+
+\subsection{Módulo de Energia}
+\label{modulo_energia}
+Integrado ao módulo \emph{Routing}, há o módulo \emph{Energy Model}, que é responsável por realizar a simulação das baterias e do seu respectivo consumo. Esse módulo foi implementado por \cite{denis_artigo} e foi integrado oficialmente ao simulador The ONE na sua última versão, a 1.6, lançada em 7 de outubro de 2015 \cite{theOne_github}.
+
+O módulo de energia desenvolvido por \cite{denis_artigo} considera que todos os dispositivos possuem cinco estados básicos de funcionamento:
+
+\begin{itemize}
+    \item \textbf{Desligado:} Neste estado, o nó não pode fazer uso de suas interfaces de rede, seja por falta de energia ou por uma decisão feita pelo protocolo de encaminhamento, como por exemplo economizar energia durante algum tempo. Além disso, não é possível estabelecer conexões com outros nós e, como consequência, não pode enviar e receber mensagens;
+    \item \textbf{Inativo:} O nó, neste estado, tem as suas interfaces de rede ligadas mas está adormecido. Todavia, pode ser detectado e contatado por outros nós. Numa situação real este estado é responsável pelo consumo muito pequeno de energia, porém ele não é considerado por parte deste módulo;
+    \item \textbf{Buscando:} Neste estado o nó encontra-se na procura por nós vizinhos para que possa estabelecer contato e, posteriormente, receber e enviar mensagens. Em suma, os nós entram periodicamente neste estado de acordo com o intervalo de busca pré-definido;
+    \item \textbf{Transmitindo:} Estado onde o nó envia mensagens para outro;
+    \item \textbf{Recebendo:} Estado onde o nó está recebendo mensagens de outro.
+\end{itemize}
+
+De acordo com \cite{denis_artigo}, é a partir do estado que o nó se encontra que o controle do consumo energia é realizado. Quando o nó tem sua interface no estado Inativo não é considerado o consumo de energia. Entretanto, quando o nó encntra-se apto para efetuar operações de busca por outros nós, envio e recebimento de mensagens o consumo é considerado de acordo com as propriedades definidas. Ao realizar uma operação de busca por outros nós, o módulo calcula a quantidade de energia consumida e decrementa da quantidade atual por meio do método \emph{reduceEnergy}. Quando se trata das operações de envio e recepção de mensagens, o módulo opera de forma um pouco diferente, pois decrementa a quantidade de energia definida a cada segundo de duração da operação de envio ou recebimento.
+
+\subsection{Modelos de Movimento}
+
+Os modelos de movimentação são responsáveis por descrever como será o deslocamento dos nós dentro da rede e são suportados diversos deles pelo módulo \emph{Movement Models}. O simulador apresenta nativamente o suporte a dois principais tipos de modelos de movimentação: sintéticos ou capturados de uma DTN real.
+
+Os modelos sintéticos caracterizam-se por gerarem, seja aleatoriamente ou não, o caminho que os nós realizam no ambiente simulado. Podendo, para tanto, serem definidos mapas por onde nós podem se movimentar. Já os modelos capturados, são caracterizados por serem obtidos de uma DTN real e convertidos para o padrão de representação do simulador que, a partir daí, define o padrão de comportamento dos nós como o sendo do ambiente real.
+
+Capturar a movimentação de nós num ambiente real e utilizá-los dentro de um ambiente simulado permite verificar como a rede pode se comportar quando são utilizados protocolos diferentes dos que estão em operação no ambiente real, além, é claro, de permitir maior grau de realismo nas simulações.
+
+\subsection{Eventos}
+
+Os eventos, gerados e processados pelo módulo \emph{Event Generators}, nada mais são que as mensagens trocadas entre nós da rede simulada. As mensagens são sempre "de um para um", ou seja, são originadas em um nó específico e destinadas a outro nó específico.
+
+O simulador permite que sejam configurados parâmetros como o intervalo de tempo que um dispositivo gera mensagens para outro além do tamanho das mesmas. Pode-se, é claro, definir para ambos os parâmetros um valor mínimo e máximo, ficando o simulador responsável por gerar valores aleatórios dentro do intervalo definido.
+
+\subsection{Relatórios e Automação de Testes}
+
+Dentre todas as funcionalidades já apresentadas destaca-se a geração de relatórios pelo módulo \emph{Visualization and Results} e a possibilidade de automatização de testes implementada pelo módulo principal \emph{Simulation Engine}. 
+
+A geração de relatórios têm sua importância destacada diante da necessidade de avaliar o comportamento da rede diante de parâmetros definidos e, muito além disso, testar novas técnicas implementadas dentro do simulador. Existem diversos relatórios disponíveis, destacando-se para utilização neste trabalho os seguintes:
+
+\begin{itemize}
+    \item \textbf{MessageDeliveryReport:} Este relatório detalha com alta granularidade a quantidade acumulada de mensagens entregues e geradas, além da probabilidade de entrega de mensagens da rede de acordo com o tempo de simulação;
+    \item \textbf{EnergyLevelReport:} Tendo sido desenvolvido por \cite{denis_artigo}, este relatório detalha a quantidade de energia contida nas baterias de cada um dos dispositivos de acordo com o tempo de simulação, possibilitando o cálculo da linha de tendência de consumo e a quantidade média de energia armazenada nas baterias.
+\end{itemize}
+
+Quanto a automação dos testes, o simulador permite programação de testes por meio de arquivos de configuração e a sua execução a partir da linha de comando em modo batch. A cada teste realizado o simulador gera os respectivos relatórios de teste para que possam ser analisados a fundo posteriormente.
+
+\subsection{Dispositivos}
+
+O simulador The ONE permite configurar grupos de nós, onde, cada um deles, possui uma determinada quantidade de dispositivos com características específicas, como velocidade de movimentação, modelo de movimento, interfaces de rede e capacidade das baterias. Quanto às interfaces de rede, é possível configurar a distância máxima de alcance do sinal de rádio e a velocidade máxima que ela pode operar.
+
+A possibilidade de criar grupos com diversas características únicas permite verificar a interoperabilidade entre os protocolos de encaminhamento, além de simular o comportamento da rede quanto a existência de nós com características distintas.
+
+\subsection{Interface Gráfica}
+
+O simulador permite a visualização em tempo real da simulação por meio de sua interface gráfica, apresentada na Figura \ref{interface_theONE}.  É possível acompanhar individualmente a movimentação dos nós, o estado (ligado/desligado), alcance das interfaces, situação dos buffers e o estado das conexões (up/down/relay). A Figura \ref{node_theONE} apresenta os detalhes individuais do nó \emph{p28} durante uma simulação realizada utilizando o The ONE.
+
+\begin{figure}[htp!]
+    \centering
+    \includegraphics[width=1\textwidth]{figuras/cap_3/secao_1/interface_theONE.PNG}
+    \caption{Interface do Simulador The ONE \cite{keranen2009one}.}
+    \label{interface_theONE}
+\end{figure}
+
+\begin{figure}[htp!]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figuras/cap_3/secao_1/node_theONE.PNG}
+    \caption{Detalhes do nó \emph{p28} em uma simulação \cite{keranen2009one}.}
+    \label{node_theONE}
+\end{figure}
+
+\newpage
+\subsection{Arquivo de Configurações}
+\label{subsec:arquivo_configuracao}
+O arquivo de configurações do simulador consiste, basicamente, em um conjunto de linhas com definições de valores para os parâmetros de simulação. É a partir dele que o cenário de simulação é definido, incluindo, por exemplo, configurações dos grupos de nós, protocolos utilizados e modelos de movimento utilizados.
+
+A Figura \ref{exemplo_config} apresenta um exemplo de trecho do arquivo de configurações do simulador The ONE. Nele é possível visualizar a definição de um cenário com o nome "exemplo". Por sua vez, este cenário apresenta um período de 86400 segundos, ou um dia, e possui apenas um único grupo de dispositivos. O grupo, que contém 10 nós,  utiliza uma interface \emph{Bluetooth} com alcance máximo de 10 metros e velocidade de transmissão de 25 KBytes/s. O protocolo escolhido foi o Epidemic Routing e os nós utilizam o modelo de movimentação \emph{ShortestPathMapBasedMovement} que, resumidamente, faz com que os nós sempre se movimentem pelos caminhos disponíveis no mapa escolhendo um ponto aleatório e seguindo a rota mais curta para este destino, a partir de sua localização atual. Além disso, existem configurações do módulo de energia, onde é definido que todos os nós do grupo possuem baterias com capacidade de 4800mW, consomem 0.92mW a cada busca por dispositivos e 0.08mW a cada segundo enviando ou recebendo mensagens.
+
+\begin{figure}[htp!]
+\centering
+\lstinputlisting{codigos/exemplo.txt}
+\caption{Exemplo de trecho do arquivo de configurações do simulador The ONE.}
+\label{exemplo_config}
+\end{figure}

@@ -1,0 +1,23 @@
+\chapter{CONCLUSÃO}\label{conc}
+
+A construção deste Trabalho de Conclusão do Curso permitiu ampliar o conhecimento por meio de pesquisas relacionadas à área de Redes Tolerantes a Atrasos e Desconexões, além de ter servido como apoio para a obtenção de conhecimento acerca das tecnologias e ferramentas ligadas à Geolocalização e simulação de protocolos de rede.
+
+Todo o esforço empregado para o desenvolvimento da técnica proposta teve como principal objetivo dinamizar o intervalo de busca ótimo de 32 segundos proposto por \cite{denis_artigo} de forma a melhor aproveitar as oportunidades de contato de acordo com com a probabilidade deles ocorrem em regiões geográficas previamente definidas, sendo de grande valia, este trabalho, para dar continuidade a pesquisas relacionadas ao intervalo entre buscas por dispositivos móveis dentro da área de DTNs.
+
+A partir dos testes realizados no Capítulo \ref{cap:testes}, foi evidenciado que o uso da técnica em ambientes onde não há recarrega as baterias prejudica o desempenho da rede, uma vez que elas se esgotam muito rapidamente devido ao consumo adicional gerado pela técnica, oriundo principalmente pelo uso de dispositivos GPS. A morte da rede se traduz na interrupção da entrega de mensagens e, consequentemente, faz com que a técnica fique em desvantagem quanto a entrega de mensagens e a probabilidade de entrega ao ser comparada a uma rede que não a utiliza.
+
+Em cenários onde a recarga periódica das baterias é possível, entretanto, os resultados mostraram que a utilização da técnica oferece vantagens. Nos testes realizados com o intervalo de busca mínimo de 8, padrão de 32 e máximo de 32 segundos, por exemplo, em 30 dias de simulação, uma média de 7832 mensagens foram entregues com a técnica, contra 6170 mensagens entregues sem ela. Ou seja, uma média de 1632 mensagens a mais entregues quando a técnica foi utilizada. Como consequência da maior quantidade de mensagens entregues, a probabilidade de entrega também se manteve acima de uma rede que utiliza o intervalo fixo de 32 segundos. Vale ressaltar que é considerado o consumo adicional gerado pelos dispositivos de geolocalização.
+
+Conclui-se também que tornar inteligente o consumo das baterias em prol do aumento da quantidade de mensagens entregues e da probabilidade de entrega não, necessariamente, significa economizá-las, mas sim gastar mais em momentos oportunos e economizá-las em momentos desfavoráveis.
+
+Por fim, a técnica é forte candidata a ser utilizada em ambientes onde há a possibilidade de recarga das baterias, desde que estas ocorram antes da interrupção da atividade da rede por falta de energia.
+
+\section{Trabalhos Futuros}
+
+Quanto ao módulo de análise do consumo de energia, existem melhorias que podem ser desenvolvidas com o objetivo de aumentar o realismo do cenário de simulação. A sobrecarga gerada pela técnica na troca e intercalação das tabelas de mapeamento não foi considerada pelo módulo neste trabalho devido a uma limitação do escopo, mas, no futuro, pretende-se analisar o comportamento da rede quando considera-se esses fatores.
+
+As regiões geográficas definidas neste trabalho basearam-se em áreas quadradas com 500 metros de lado. O tamanho dessas regiões influencia diretamente na quantidade de informações que serão armazenadas nas tabelas de mapeamento e, consequentemente, deve ser ajustado de acordo com as limitações existentes nos dispositivos que compõem a rede DTN. Pretende-se então, no futuro, analisar o impacto quanto ao armazenamento dessas tabelas e o quanto ele influencia positivamente e negativamente no aproveitamento das oportunidades de contato pela técnica desenvolvida. 
+
+Além disso, planeja-se também estudar a existência de um período mínimo, máximo e padrão de busca ideal, de forma a aproveitar ainda mais as oportunidades de contato e, como consequência, aumentar também a quantidade de mensagens entregues e a probabilidade de entrega de mensagens.
+
+No futuro, planeja-se abordar essas e outras questões que possam contribuir para um melhor aproveitamento dos recursos nas Redes Tolerantes a Atrasos e Desconexões.
